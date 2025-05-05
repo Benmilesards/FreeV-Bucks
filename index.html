@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Free V-Bucks Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Burbank+Big+Condensed:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Burbank Big Condensed', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(0, 30, 80, 0.85);
+      border: 2px solid #00f0ff;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 0 25px #00eaffaa;
+      animation: glitchy 2s infinite;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #00c8ff;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    p {
+      font-size: 1.3rem;
+      color: #c0e9ff;
+    }
+
+    input, button {
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      margin-top: 20px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      font-family: 'Burbank Big Condensed', sans-serif;
+    }
+
+    input {
+      width: 250px;
+      background: #001e3c;
+      color: #fff;
+      border: 2px solid #00d4ff;
+    }
+
+    button {
+      background: #00b4ff;
+      color: #fff;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #0088cc;
+      transform: scale(1.05);
+    }
+
+    #vbucks-counter {
+      font-size: 2.5rem;
+      margin-top: 20px;
+      color: cyan;
+      text-shadow: 0 0 10px cyan;
+      animation: flicker 0.2s infinite alternate;
+    }
+
+    @keyframes flicker {
+      from { opacity: 1; }
+      to { opacity: 0.8; }
+    }
+
+    @keyframes glitchy {
+      0%, 100% { transform: skew(0deg); }
+      25% { transform: skew(1deg, -1deg); }
+      50% { transform: skew(-1.5deg, 1.5deg); }
+      75% { transform: skew(0.5deg, -0.5deg); }
+    }
+
+    video {
+      margin-top: 20px;
+      max-width: 100%;
+      border: 5px solid cyan;
+      border-radius: 16px;
+      box-shadow: 0 0 20px cyan;
+    }
+
+    #videoContainer {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="step1">
+    <h1>Get Free V-Bucks</h1>
+    <p>Enter your Epic Games username</p>
+    <input type="text" id="username" placeholder="Your Fortnite Username">
+    <button onclick="nextStep()">Okay</button>
+  </div>
+
+  <div class="container" id="step2" style="display:none;">
+    <h1>Generating V-Bucks...</h1>
+    <div id="vbucks-counter">V-Bucks: 0</div>
+    <p>2FA Verification Required</p>
+    <button onclick="finalStep()">Enable 2FA</button>
+  </div>
+
+  <div class="container" id="videoContainer">
+    <h1>Processing...</h1>
+    <video id="growlVid" src="growl.mov" autoplay></video>
+  </div>
+
+  <script>
+    let counter = 0;
+    let interval;
+
+    function nextStep() {
+      const user = document.getElementById("username").value;
+      if (!user.trim()) {
+        alert("Enter a valid Fortnite username");
+        return;
+      }
+      document.getElementById("step1").style.display = "none";
+      document.getElementById("step2").style.display = "block";
+
+      interval = setInterval(() => {
+        counter += Math.floor(Math.random() * 500) + 100;
+        document.getElementById("vbucks-counter").textContent = "V-Bucks: " + counter.toLocaleString();
+      }, 120);
+    }
+
+    function finalStep() {
+      clearInterval(interval);
+      document.getElementById("step2").style.display = "none";
+      document.getElementById("videoContainer").style.display = "block";
+      const vid = document.getElementById("growlVid");
+      vid.play();
+    }
+  </script>
+
+</body>
+</html>
